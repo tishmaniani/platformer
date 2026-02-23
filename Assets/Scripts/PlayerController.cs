@@ -2,12 +2,18 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    //Характеристики персонажа
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private float _jumpForce = 5f;
 
+    //Проверка касаняния земли игроком
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private float checkRadius = 0.2f;
     [SerializeField] private LayerMask groundLayer;
+
+    //Следование камеры
+    
+
 
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
