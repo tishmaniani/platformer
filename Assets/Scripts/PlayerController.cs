@@ -1,4 +1,3 @@
-using Unity.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -6,16 +5,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private float _jumpForce = 5f;
 
+    [SerializeField] private Transform _groundCheck;
+    [SerializeField] private float checkRadius = 0.2f;
+    [SerializeField] private LayerMask groundLayer;
+
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
 
     private bool isGrounded;
 
-
-    void Start()
+    void Awake()
     {
-        rb = gameObject.GetComponent<Rigidbody2D>();
-        sprite = gameObject.GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
+        sprite = GetComponent<SpriteRenderer>();
     }
 
 
@@ -23,34 +25,28 @@ public class PlayerController : MonoBehaviour
     {
         float horizontal = Input.GetAxis("Horizontal");
 
-        sprite.flipX = horizontal < 0 ? true : false;
+        isGrounded = Physics2D.OverlapCircle(_groundCheck.position, checkRadius, groundLayer);
+
+        if (horizontal != 0)
+        {
+            sprite.flipX = horizontal < 0;
+        }
 
         rb.linearVelocity = new Vector2(horizontal * _moveSpeed, rb.linearVelocity.y);
 
-        if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void OnDrawGizmos()
     {
-        if(collision.gameObject.CompareTag("Ground"))
+        if (_groundCheck != null)
         {
-            Debug.Log("На Земле");
-            isGrounded = true;
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(_groundCheck.position, checkRadius);
         }
     }
-
-    void OnCollisionExit2D(Collision2D collision)
-    {
-         if(collision.gameObject.CompareTag("Ground"))
-        {
-            Debug.Log("Не на земле");
-            isGrounded = false;
-        }
-    }
-
-
 
 }
