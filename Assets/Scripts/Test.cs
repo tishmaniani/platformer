@@ -6,6 +6,7 @@ public class Test : MonoBehaviour
     void Start()
     {
         Debug.log("Проверка");
+        Debug.log("Проверка");
     }
 
     // Update is called once per frame
