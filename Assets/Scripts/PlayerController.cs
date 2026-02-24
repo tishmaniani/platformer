@@ -6,15 +6,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private float _jumpForce = 5f;
 
+
     //Проверка касаняния земли игроком
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private float checkRadius = 0.2f;
     [SerializeField] private LayerMask groundLayer;
 
+    public float FacingDirection { get; private set;} = 1f;
+
     //Следование камеры
     
-
-
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
 
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
+
     }
 
 
@@ -36,6 +38,7 @@ public class PlayerController : MonoBehaviour
         if (horizontal != 0)
         {
             sprite.flipX = horizontal < 0;
+            FacingDirection = horizontal < 0 ? -1f : 1f;
         }
 
         rb.linearVelocity = new Vector2(horizontal * _moveSpeed, rb.linearVelocity.y);

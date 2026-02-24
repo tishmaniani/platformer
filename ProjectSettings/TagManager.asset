@@ -42,5 +42,17 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Backrgound
+    uniqueID: 514057235
+    locked: 0
+  - name: Platforms
+    uniqueID: 322329839
+    locked: 0
+  - name: Decors
+    uniqueID: 1507689291
+    locked: 0
+  - name: Player
+    uniqueID: 4016418465
+    locked: 0
   m_RenderingLayers:
   - Default
